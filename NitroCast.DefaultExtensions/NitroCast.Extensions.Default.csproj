@@ -1,0 +1,210 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D016E610-2986-4D4B-A411-236F769D66E2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>NitroCast.Extensions.Default</AssemblyName>
+    <AssemblyOriginatorKeyFile>NitroCast.Extensions.Default.pfx</AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>NitroCast.Extensions.Default</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <PublishUrl>http://localhost/DbModel.DefaultPlugins/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.XML">
+      <Name>System.XML</Name>
+    </Reference>
+    <ProjectReference Include="..\NitroCast.Core\NitroCast.Core.csproj">
+      <Name>NitroCast.Core</Name>
+      <Project>{087A43C7-6C25-46A1-9E16-B2F04243C124}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Builders\ComponentArtReferenceBuilder.cs" />
+    <Compile Include="Builders\ComponentArtEnumBuilder.cs" />
+    <Compile Include="Classes\Collections\CollectionGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\ObjectClassGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Designers\WebEditorDesigner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Designers\WebGridDesigner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DbManagers\DAABManagerClassGenerator.cs" />
+    <Compile Include="DbManagers\OleDbManagerClassGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebControls\ComponentArtWebEditorGenerator.cs" />
+    <Compile Include="WebControls\Extensions\ComponentArtReferenceFieldExtension.cs" />
+    <Compile Include="WebControls\Extensions\ComponentArtEnumFieldExtension.cs" />
+    <Compile Include="WebControls\Extensions\WebGridReferenceFieldExtension.cs" />
+    <Compile Include="WebControls\Extensions\WebGridEnumFieldExtension.cs" />
+    <Compile Include="WebControls\Extensions\WebGridValueFieldExtension.cs" />
+    <Compile Include="WebControls\Extensions\WebModelClassExtension.cs" />
+    <Compile Include="WebControls\Extensions\WebEditorEnumFieldExtension.cs" />
+    <Compile Include="WebControls\Extensions\WebEditorReferenceFieldExtension.cs" />
+    <Compile Include="WebControls\WebDeleteDialogGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebControls\WebEditorGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebControls\Extensions\WebEditorValueFieldExtension.cs" />
+    <Compile Include="WebControls\WebGridGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebControls\WebViewGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebPages\WebClassPage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebPages\WebClassPageCodeBehind.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Content Include="DbManagers\TextFile1.txt" />
+    <Content Include="Extensions_ChangeMod.txt" />
+    <EmbeddedResource Include="Designers\WebEditorDesigner.resx">
+      <DependentUpon>WebEditorDesigner.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Designers\WebGridDesigner.resx">
+      <DependentUpon>WebGridDesigner.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NitroCast.Extensions.Default.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SqlManagers\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,21 @@
+﻿
+CREATE INDEXES:
+HAVE NitroCast CREATE A NEW INDEX ITEM FOR A CLASS
+INDEX ITEMS CREATE A Enum THAT PROVIDES FOR RAPID LOOKUPS
+
+INDEX ENUMS
+GetCollection("FirstName='Mark', LastName='Story'", GreyFoxContactIndex.Name, null);
+
+FLAG GROUP ENUMS
+GetCollection("FirstName='Mark', LastName='Story'", GreyFoxContactIndex.Name, GreyFoxContactFlagGroup.Extended);
+
+Builds SQL Code with Parameters!
+Micro Table Mapping Database Resides in Memory
+GreyFoxContactManager cm = new GreyFoxContactManager();
+cm.Query.Where("FirstName").Is("Mark");      // WHERE (FirstName=@FirstName      database.AddInParameter("FirstName", DbType.String, "Mark");
+cm.Query.And("LastName").Like("Story");      //  AND LastName LIKE(@LastName)    database.AddInParameter("LastName", DbType.String, "Story");
+cm.Query.Or("MiddleName").Is("Tim");         //  OR MiddleName=@MiddleName       database.AddInParameter("MiddleName", DbType.String, "Tim");
+cm.Query.Not("Suffix").Is("III");            //  AND Suffix<>@Suffix             database.AddInParameter("Suffix", DbType.String, "Tim");
+
+cm.GetCollection(GreyFoxContactIndex.Name, GreyFoxContactFlagGroup.Extended);
+cm.Where.Clear();

@@ -1,0 +1,22 @@
+Version 1.5	- February 25, 2004
+*	NEW FEATURE: Fields and Children can now be separated into "Folders" within Classes 
+	for readability and code organization. This will also be used by code generators to
+	provide fast routines to only read or update specific "folders" in the class.
+	Saved files will be updated to the new version.
+*	Fields and children can now be assinged specific orders in the classes.
+*	Fields and Children editor saves "design state" of expanded and collapsed items;
+	a real time saver during periods of frequent use.
+Version 1.11 - January 11, 2004
+*	Bug Fix: The model no longer has to be reloaded to generate fields names in code.
+*	Added FCKeditor field editor.
+Version 1.10 - December 11, 2003
+*	Bug Fix: NitroCast crashes when generating code after creating new classes with
+	child objects in a single session. DataTypes for new classes were incorrectly created.
+*	Major overhaul of DataTypeManager and ChildDataType classes. While there
+	are no significant changes visible to the client, the code is more efficient and
+	easier to read.
+*	ChildDataType properties IsCustom, IsInternal and IsReferenced are now obsolete yet
+	remain for backward compatability. This will be removed in the future.
+
+Version 1.00 - December 1, 2003
+*	First initial release.

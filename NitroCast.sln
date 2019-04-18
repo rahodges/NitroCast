@@ -1,0 +1,53 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroCast", "NitroCast\NitroCast.csproj", "{C1D837B3-8D20-4B44-9E84-DA8AF81F4D13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroCast.Core", "NitroCast.Core\NitroCast.Core.csproj", "{087A43C7-6C25-46A1-9E16-B2F04243C124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroCast.Extensions.Default", "NitroCast.DefaultExtensions\NitroCast.Extensions.Default.csproj", "{D016E610-2986-4D4B-A411-236F769D66E2}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "NitroCast Setup", "Setup\Setup.vdproj", "{281DB019-7E9D-4BDA-A542-8FEBE0B335D3}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://orochimaru:8080/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = NitroCast.Core\\NitroCast.Core.csproj
+		SccProjectName1 = NitroCast.Core
+		SccLocalPath1 = NitroCast.Core
+		SccProjectUniqueName2 = NitroCast.DefaultExtensions\\NitroCast.Extensions.Default.csproj
+		SccProjectName2 = NitroCast.DefaultExtensions
+		SccLocalPath2 = NitroCast.DefaultExtensions
+		SccProjectUniqueName3 = NitroCast\\NitroCast.csproj
+		SccProjectName3 = NitroCast
+		SccLocalPath3 = NitroCast
+		SccProjectUniqueName4 = Setup\\Setup.vdproj
+		SccProjectName4 = Setup
+		SccLocalPath4 = Setup
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1D837B3-8D20-4B44-9E84-DA8AF81F4D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1D837B3-8D20-4B44-9E84-DA8AF81F4D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1D837B3-8D20-4B44-9E84-DA8AF81F4D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1D837B3-8D20-4B44-9E84-DA8AF81F4D13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{087A43C7-6C25-46A1-9E16-B2F04243C124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{087A43C7-6C25-46A1-9E16-B2F04243C124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{087A43C7-6C25-46A1-9E16-B2F04243C124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{087A43C7-6C25-46A1-9E16-B2F04243C124}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D016E610-2986-4D4B-A411-236F769D66E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D016E610-2986-4D4B-A411-236F769D66E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D016E610-2986-4D4B-A411-236F769D66E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D016E610-2986-4D4B-A411-236F769D66E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{281DB019-7E9D-4BDA-A542-8FEBE0B335D3}.Debug|Any CPU.ActiveCfg = Debug
+		{281DB019-7E9D-4BDA-A542-8FEBE0B335D3}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

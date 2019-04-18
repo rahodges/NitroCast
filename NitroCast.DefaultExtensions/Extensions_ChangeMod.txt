@@ -1,0 +1,70 @@
+Version 1.75 - January 30, 2004
+*	Caching mechanism is now implemented. Expect performance increases on any new
+	instantiations of objects with ASP.net caching enabled. See documentation for
+	cache settings.	Child objects are cached as well. This is awesome!
+*	Webfarms and clustered servers need to use some type of service to inform each
+	other on row updates. This is not implemented in NitroCast generated code at the
+	moment.
+Version 1.53 - January 27, 2004
+*	Manager.GetCollection, ParseFromReader, FillFromReader now checks for illegal
+	children with an ID of "0" and retains null values for these children.
+*	Manager.GetCollection now uses LEFT JOIN instead of INNER JOIN to retain null
+	values.
+*	Manager.Replicate now changed to Manager.Duplicate.
+Version 1.52 - January 21, 2004
+*	Editor now sets a load flag when the object ID changes to eliminate the "list
+	items not being updated" bug.
+Version 1.51 - January 14, 2004
+*	Manager.GetCollection now supports parameters and arrays for ChildrenFlags.
+Version 1.50 - January 11, 2004
+*	IndexedListGenerator class added for objects. This is used specifically for
+	manager classes and is a required class.
+*	Manager class now uses internal caches implementing binary searches and indexes.
+*	Manager.CreateTable now creates subtables for children with object level table
+	specifications. It ignores subtables for children with type level tables.
+	
+	There are three levels:
+	
+		Type Level	
+			 The table name is hard coded by the data type of the child.
+		Object Level	
+			The table name is hard coded by the data type of the object.
+		Client Level
+			The table name is dynamic, and depends on the client's
+			specification.
+
+	The last case, generally, should never be used. In any event coding the tables
+	for client level is not implimented in this release.
+*	Manager.GetCollection code has been refactored for efficient memory utilization
+	resulting in a slight performance increase (10-12% faster). The prior method
+	wasted vast amounts of memory creating PlaceHolder objects then destroying them
+	when using OptionFlags, the new method instantiates all objects only once.
+
+Version 1.12 - January 2, 2004
+*	ObjectClassGenerator calls EnsurePreload() on children instead of using its
+	own logic to ensure that the object is loaded.
+
+Version 1.11 - December 31, 2003
+*	OleDbStoreProcManagerGenerator now splits query strings into multiple lines
+	instead of listing them all in the same line. This also corrects a compilation
+	error when lines exceed compiler limit.
+
+Version 1.10 - November 16, 2003
+*	CollectionGenerator now provides an OnCollectionChanged event.
+*	ObjectClassGenerator now handles OnCollectionChanged events to correctly
+	desyncronize the class when the child collection changes.
+	(future versions will handle child collection changes separately)
+*	FieldsDataTypes for strings now have "string.Empty" as the NullValue.
+
+Version 1.00 - November 15, 2003
+*	FieldDataTypes now offer a NullValue property to specify the default null
+	value for types. This will allow the datalayer to properly interpret null
+	values in the database.
+*	OleDbStoredProcManagerClassGenerator now uses FieldDataType.NullValue to
+	set class fields to their default null value if the database holds a null 
+	value.
+*	OleDbStoredProcManagerClassGenerator now uses FieldDataType.Null Value to
+	set the database field to null if the class field equals this null value.
+*	Classes now implement a syncronization detection feature. If properties
+	are set to their existing value, syncronization will not change.
+*	Official release of NitroCast Default Plugins.

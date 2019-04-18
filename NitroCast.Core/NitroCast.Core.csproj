@@ -1,0 +1,396 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{087A43C7-6C25-46A1-9E16-B2F04243C124}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>NitroCast.Core</AssemblyName>
+    <AssemblyOriginatorKeyFile>NitroCast.Core.pfx</AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>NitroCast.Core</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <PublishUrl>http://localhost/DbModel.Core/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.TeamSystem.Data.UnitTesting, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compiler.cs" />
+    <Compile Include="DataModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataModelEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataModelVersion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataTypeManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DbModelUtilities.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DmProject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DmProjectUserOptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DmTableSchema.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DmTableSchemaAuthor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DmTableSchemaSubscriber.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\ClassFolderExtension.cs" />
+    <Compile Include="Extensions\ClassFolderBuilder.cs" />
+    <Compile Include="Extensions\EnumTypeBuilder.cs" />
+    <Compile Include="Extensions\ModelEnumExtension.cs" />
+    <Compile Include="Extensions\ObjectExtensionCollection.cs" />
+    <Compile Include="Extensions\ModelClassExtension.cs" />
+    <Compile Include="Extensions\ObjectExtension.cs" />
+    <Compile Include="Extensions\OutputExtensionType.cs" />
+    <Compile Include="Extensions\ReferenceFieldExtension.cs" />
+    <Compile Include="Extensions\EnumFieldExtension.cs" />
+    <Compile Include="Extensions\ValueFieldExtension.cs" />
+    <Compile Include="Extensions\ModelFolderExtension.cs" />
+    <Compile Include="Extensions\OutputExtensionConnector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\OutputExtension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\OutputExtensionCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\OutputExtensionConnectorCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\CodeWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\DbModelExtensionType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\IOutputExtension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\ICodeDesigner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\Extension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\ExtensionAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\ExtensionManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="JetSqlConnector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\ClassEntries\EnumField.cs" />
+    <Compile Include="ModelEntries\Classes\ClassEntries\EnumFieldCollection.cs" />
+    <Compile Include="ModelEntries\Classes\ClassEntries\ReferenceField.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\ClassEntries\ReferenceFieldCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\ClassEntries\ClassFolder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\ClassEntries\ClassFolderCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\ClassEntries\ClassFolderDataMode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\ClassEntries\ClassField.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\ModelEnum.cs" />
+    <Compile Include="ModelEntries\Classes\ModelEnumCollection.cs" />
+    <Compile Include="ModelEntries\Classes\ClassEntries\ValueField.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\ClassEntries\ValueFieldCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\ModelClass.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\ModelClassCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\Classes\EnumEntries\EnumItem.cs" />
+    <Compile Include="ModelEntries\Classes\EnumEntries\EnumItemCollection.cs" />
+    <Compile Include="ModelEntries\ConcurrencyType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\DataTypes\ReferenceType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\ReferenceTypeBuilder.cs" />
+    <Compile Include="ModelEntries\DataTypes\ReferenceTypeCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\DataTypes\EnumTypeCollection.cs" />
+    <Compile Include="ModelEntries\DataTypes\EnumType.cs" />
+    <Compile Include="ModelEntries\DataTypes\ValueType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\ValueTypeBuilder.cs" />
+    <Compile Include="ModelEntries\DataTypes\ValueTypeCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\IDesignerState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\IModelEntry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\ITreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\MetaAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\MetaAttributeCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\ModelEntry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\ModelEntryCompareKey.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\ModelEntryComparer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\ModelFolder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\ModelFolderCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\References\ReferenceEntry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelEntries\References\ReferenceEntryCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProgressBarConfig.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RevisionTag.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Support\PathConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Support\ReadOnlyDictionary.cs" />
+    <Compile Include="Support\ReservedKeywords.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReservedKeywords.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Support\SQLChecker.cs" />
+    <Compile Include="TypeConverters\ChildDataTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeConverters\ClassFolderBuilderConverter.cs" />
+    <Compile Include="TypeConverters\EnumTypeBuilderConverter.cs" />
+    <Compile Include="TypeConverters\ReferenceTypeBuilderConverter.cs" />
+    <Compile Include="TypeConverters\ValueTypeBuilderConverter.cs" />
+    <Compile Include="TypeConverters\EnumDataTypeConverter.cs" />
+    <Compile Include="TypeConverters\FieldDataTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\BoundPropertyDescriptor.cs" />
+    <Compile Include="UI\CodeHighlighter.cs" />
+    <Compile Include="UI\ExtensionsCategoryTab.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CustomProperty.cs" />
+    <Compile Include="UI\CustomPropertyDescriptor.cs" />
+    <Compile Include="UI\DockableWindow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\DockingManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\TypeCategoryTab.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\NodeSorter.cs" />
+    <Compile Include="UI\TreeLE.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\WindowUtility.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Content Include="Core_ChangeMod.txt" />
+    <Content Include="Idea List.txt" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Support\ReservedKeywords.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReservedKeywords.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DockableWindow.resx">
+      <DependentUpon>DockableWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TreeLE.resx">
+      <DependentUpon>TreeLE.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NitroCast.Core.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Compiler\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

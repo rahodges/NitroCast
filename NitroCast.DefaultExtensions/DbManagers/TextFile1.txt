@@ -1,0 +1,1038 @@
+﻿/* ********************************************************** *
+ * AMNS NitroCast v1.0 OleDbManager Data Tier                   *
+ * Copyright © 2003-2006 Roy A.E. Hodges                      *
+ * All Rights Reserved                                        *
+ * ---------------------------------------------------------- *
+ * Source code may not be reproduced or redistributed without *
+ * written expressed permission from the author.              *
+ * Permission is granted to modify source code by licencee.   *
+ * These permissions do not extend to third parties.          *
+ * ********************************************************** */
+
+using System;
+using System.Data;
+using System.Data.Common;                               // New
+using System.Text;
+using System.Web;
+using Amns.GreyFox.Data;
+using Microsoft.Practices.EnterpriseLibrary.Data;       // New
+using Microsoft.Practices.EnterpriseLibrary.Caching;    // New
+
+namespace Amns.GreyFox.People
+{
+	/// <summary>
+	/// Datamanager for GreyFoxContact objects.
+	/// </summary>
+	[ExposedManager("GreyFoxContact", "", false, 1, 1, 6234)]
+	public class GreyFoxContactManager : IGreyFoxManager
+	{
+		#region Manager Fields
+
+		// Static Fields
+		static bool isInitialized;
+
+		// Private Fields
+		string tableName;
+
+		public string TableName
+		{
+			get { return tableName; }
+			set { tableName = value; }
+		}
+
+		// Hashtable to cache separate tables
+		static bool cacheEnabled	= true;
+		public static bool CacheEnabled
+		{
+			get { return cacheEnabled; }
+			set { cacheEnabled = value; }
+		}
+
+		#endregion
+
+		#region Inner Join Field Array
+
+		public static readonly string[] InnerJoinFields = new string[] {
+			"GreyFoxContactID",
+			"DisplayName",
+			"Prefix",
+			"FirstName",
+			"MiddleName",
+			"LastName",
+			"SuffixCommaEnabled",
+			"Suffix",
+			"Title",
+			"ValidationFlags",
+			"ValidationMemo",
+			"Address1",
+			"Address2",
+			"City",
+			"StateProvince",
+			"Country",
+			"PostalCode",
+			"HomePhone",
+			"WorkPhone",
+			"Fax",
+			"Pager",
+			"MobilePhone",
+			"Email1",
+			"Email2",
+			"Url",
+			"BusinessName",
+			"MemoText",
+			"BirthDate",
+			"ContactMethod"
+		};
+
+		#endregion
+
+		#region Join Field Array
+
+		public static readonly string[,] JoinFields = new string[,] {
+			{ "GreyFoxContactID", "LONG", "-1" },
+			{ "DisplayName", "TEXT(255)", "string.Empty" },
+			{ "Prefix", "TEXT(75)", "string.Empty" },
+			{ "FirstName", "TEXT(75)", "string.Empty" },
+			{ "MiddleName", "TEXT(75)", "string.Empty" },
+			{ "LastName", "TEXT(75)", "string.Empty" },
+			{ "SuffixCommaEnabled", "BIT", "" },
+			{ "Suffix", "TEXT(75)", "string.Empty" },
+			{ "Title", "TEXT(255)", "string.Empty" },
+			{ "ValidationFlags", "BYTE", "0" },
+			{ "ValidationMemo", "TEXT(255)", "string.Empty" },
+			{ "Address1", "TEXT(75)", "string.Empty" },
+			{ "Address2", "TEXT(75)", "string.Empty" },
+			{ "City", "TEXT(75)", "string.Empty" },
+			{ "StateProvince", "TEXT(75)", "string.Empty" },
+			{ "Country", "TEXT(75)", "string.Empty" },
+			{ "PostalCode", "TEXT(75)", "string.Empty" },
+			{ "HomePhone", "TEXT(75)", "string.Empty" },
+			{ "WorkPhone", "TEXT(75)", "string.Empty" },
+			{ "Fax", "TEXT(75)", "string.Empty" },
+			{ "Pager", "TEXT(75)", "string.Empty" },
+			{ "MobilePhone", "TEXT(75)", "string.Empty" },
+			{ "Email1", "TEXT(75)", "string.Empty" },
+			{ "Email2", "TEXT(75)", "string.Empty" },
+			{ "Url", "TEXT(75)", "string.Empty" },
+			{ "BusinessName", "TEXT(255)", "string.Empty" },
+			{ "MemoText", "MEMO", "string.Empty" },
+			{ "BirthDate", "DATETIME", "DateTime.MinValue" },
+			{ "ContactMethod", "BYTE", "0" }
+		};
+
+		#endregion
+
+		#region Default NitroCast Constructors
+
+		static GreyFoxContactManager()
+		{
+		}
+
+		public GreyFoxContactManager(string tableName)
+		{
+			this.tableName = tableName;
+		}
+
+		#endregion
+
+		#region Default NitroCast Constructors
+
+		// Initialize
+		public void Initialize() // NEW
+		{
+            isInitialized = true;
+		}
+		#endregion
+
+		#region Default NitroCast Insert Apply
+
+		/// <summary>
+		/// Inserts a GreyFoxContact into the database. All children should have been
+		/// saved to the database before insertion. New children will not be
+		/// related to this object in the database.
+		/// </summary>
+		/// <param name="_GreyFoxContact">The GreyFoxContact to insert into the database.</param>
+		internal static int _insert(GreyFoxContact greyFoxContact)
+		{
+            int id;
+            string query;
+            Database database;
+            DbCommand dbCommand;
+
+            database = DatabaseFactory.CreateDatabase();
+			
+			query = "INSERT INTO " + greyFoxContact.tableName + 
+                "(" +
+                "DisplayName," +
+				"Prefix," +
+				"FirstName," +
+				"MiddleName," +
+				"LastName," +
+				"SuffixCommaEnabled," +
+				"Suffix," +
+				"Title," +
+				"ValidationFlags," +
+				"ValidationMemo," +
+				"Address1," +
+				"Address2," +
+				"City," +
+				"StateProvince," +
+				"Country," +
+				"PostalCode," +
+				"HomePhone," +
+				"WorkPhone," +
+				"Fax," +
+				"Pager," +
+				"MobilePhone," +
+				"Email1," +
+				"Email2," +
+				"Url," +
+				"BusinessName," +
+				"MemoText," +
+				"BirthDate," +
+				"ContactMethod) VALUES (" +
+				"@DisplayName," +
+				"@Prefix," +
+				"@FirstName," +
+				"@MiddleName," +
+				"@LastName," +
+				"@SuffixCommaEnabled," +
+				"@Suffix," +
+				"@Title," +
+				"@ValidationFlags," +
+				"@ValidationMemo," +
+				"@Address1," +
+				"@Address2," +
+				"@City," +
+				"@StateProvince," +
+				"@Country," +
+				"@PostalCode," +
+				"@HomePhone," +
+				"@WorkPhone," +
+				"@Fax," +
+				"@Pager," +
+				"@MobilePhone," +
+				"@Email1," +
+				"@Email2," +
+				"@Url," +
+				"@BusinessName," +
+				"@MemoText," +
+				"@BirthDate," +
+				"@ContactMethod);";
+
+            dbCommand = database.GetSqlStringCommand(query);
+			fillParameters(dbCommand, greyFoxContact);
+            dbCommand.ExecuteNonQuery();
+            dbCommand = database.GetSqlStringCommand("SELECT @@IDENTITY AS IDVal");
+            id = (int)database.ExecuteScalar();
+
+			if(cacheEnabled) 
+                cacheStore(greyFoxContact);
+
+			return id;
+		}
+
+		#endregion
+
+		#region Default NitroCast Update Apply
+
+		internal static int _update(GreyFoxContact greyFoxContact)
+		{
+            string query;
+            Database database;
+            DbCommand dbCommand;
+
+            database = DatabaseFactory.CreateDatabase();
+
+			dbCommand.CommandText = "UPDATE " + greyFoxContact.tableName + " SET " +
+                "DisplayName=@DisplayName," +
+				"Prefix=@Prefix," +
+				"FirstName=@FirstName," +
+				"MiddleName=@MiddleName," +
+				"LastName=@LastName," +
+				"SuffixCommaEnabled=@SuffixCommaEnabled," +
+				"Suffix=@Suffix," +
+				"Title=@Title," +
+				"ValidationFlags=@ValidationFlags," +
+				"ValidationMemo=@ValidationMemo," +
+				"Address1=@Address1," +
+				"Address2=@Address2," +
+				"City=@City," +
+				"StateProvince=@StateProvince," +
+				"Country=@Country," +
+				"PostalCode=@PostalCode," +
+				"HomePhone=@HomePhone," +
+				"WorkPhone=@WorkPhone," +
+				"Fax=@Fax," +
+				"Pager=@Pager," +
+				"MobilePhone=@MobilePhone," +
+				"Email1=@Email1," +
+				"Email2=@Email2," +
+				"Url=@Url," +
+				"BusinessName=@BusinessName," +
+				"MemoText=@MemoText," +
+				"BirthDate=@BirthDate," +
+				"ContactMethod=@ContactMethod WHERE GreyFoxContactID=@GreyFoxContactID";
+
+            dbCommand = database.GetSqlStringCommand(query);
+
+			fillParameters(dbCommand, greyFoxContact);
+
+            database.AddInParameter(dbCommand, "GreyFoxContactID", DbType.Int32, greyFoxContact.iD);            
+
+			// Abandon remaining updates if no rows have been updated by returning false immediately.
+			if (database.ExecuteNonQuery(dbCommand) == 0) return -1;
+
+			// Store greyFoxContact in cache.
+			if (cacheEnabled) cacheStore(greyFoxContact);
+
+			return greyFoxContact.iD;
+		}
+
+		#endregion
+
+		#region Default NitroCast Fill Parameters Apply
+
+		private static void fillParameters(Database database, DbCommand command, GreyFoxContact greyFoxContact)
+		{            
+			#region Name
+
+            addParameter(database, command, "DisplayName", DbType.String, 
+                greyFoxContact.displayName, DBNull.Value);
+            addParameter(database, command, "Prefix", DbType.String,
+                greyFoxContact.prefix, DBNull.Value);
+            addParameter(database, command, "FirstName", DbType.String,
+                greyFoxContact.firstName, DBNull.Value);
+            addParameter(database, command, "MiddleName", DbType.String,
+                greyFoxContact.middleName, DBNull.Value);
+            addParameter(database, command, "LastName", DbType.String,
+                greyFoxContact.lastName, DBNull.Value);
+            addParameter(database, command, "SuffixCommaEnabled", DbType.Boolean, greyFoxContact.suffixCommaEnabled);
+            addParameter(database, command, "Suffix", DbType.String,
+                greyFoxContact.suffix, DBNull.Value);
+            addParameter(database, command, "LastName", DbType.String,
+                greyFoxContact.lastName, DBNull.Value);
+            addParameter(database, command, "Title", DbType.String,
+                greyFoxContact.title, DBNull.Value);
+            addParameter(database, command, "ValidationFlags", DbType.Byte, greyFoxContact.validationFlags);
+            addParameter(database, command, "ValidationMemo", DbType.String, greyFoxContact.validationMemo);
+            
+			#endregion
+
+			#region Address
+
+			if(greyFoxContact.address1 == null)
+				command.Parameters.Add("@Address1", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@Address1", OleDbType.VarChar).Value = greyFoxContact.address1;
+			if(greyFoxContact.address2 == null)
+				command.Parameters.Add("@Address2", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@Address2", OleDbType.VarChar).Value = greyFoxContact.address2;
+			if(greyFoxContact.city == null)
+				command.Parameters.Add("@City", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@City", OleDbType.VarChar).Value = greyFoxContact.city;
+			if(greyFoxContact.stateProvince == null)
+				command.Parameters.Add("@StateProvince", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@StateProvince", OleDbType.VarChar).Value = greyFoxContact.stateProvince;
+			if(greyFoxContact.country == null)
+				command.Parameters.Add("@Country", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@Country", OleDbType.VarChar).Value = greyFoxContact.country;
+			if(greyFoxContact.postalCode == null)
+				command.Parameters.Add("@PostalCode", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@PostalCode", OleDbType.VarChar).Value = greyFoxContact.postalCode;
+			#endregion
+
+			#region Voice
+
+			if(greyFoxContact.homePhone == null)
+				command.Parameters.Add("@HomePhone", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@HomePhone", OleDbType.VarChar).Value = greyFoxContact.homePhone;
+			if(greyFoxContact.workPhone == null)
+				command.Parameters.Add("@WorkPhone", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@WorkPhone", OleDbType.VarChar).Value = greyFoxContact.workPhone;
+			if(greyFoxContact.fax == null)
+				command.Parameters.Add("@Fax", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@Fax", OleDbType.VarChar).Value = greyFoxContact.fax;
+			if(greyFoxContact.pager == null)
+				command.Parameters.Add("@Pager", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@Pager", OleDbType.VarChar).Value = greyFoxContact.pager;
+			if(greyFoxContact.mobilePhone == null)
+				command.Parameters.Add("@MobilePhone", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@MobilePhone", OleDbType.VarChar).Value = greyFoxContact.mobilePhone;
+			#endregion
+
+			#region Internet
+
+			if(greyFoxContact.email1 == null)
+				command.Parameters.Add("@Email1", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@Email1", OleDbType.VarChar).Value = greyFoxContact.email1;
+			if(greyFoxContact.email2 == null)
+				command.Parameters.Add("@Email2", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@Email2", OleDbType.VarChar).Value = greyFoxContact.email2;
+			if(greyFoxContact.url == null)
+				command.Parameters.Add("@Url", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@Url", OleDbType.VarChar).Value = greyFoxContact.url;
+			#endregion
+
+			#region Business
+
+			if(greyFoxContact.businessName == null)
+				command.Parameters.Add("@BusinessName", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@BusinessName", OleDbType.VarChar).Value = greyFoxContact.businessName;
+			#endregion
+
+			#region Default
+
+			if(greyFoxContact.memoText == null)
+				command.Parameters.Add("@MemoText", OleDbType.VarChar).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@MemoText", OleDbType.VarChar).Value = greyFoxContact.memoText;
+			if(greyFoxContact.birthDate == DateTime.MinValue)
+				command.Parameters.Add("@BirthDate", OleDbType.Date).Value = DBNull.Value;
+			else
+				command.Parameters.Add("@BirthDate", OleDbType.Date).Value = greyFoxContact.birthDate;
+			command.Parameters.Add("@ContactMethod", OleDbType.UnsignedTinyInt).Value = greyFoxContact.contactMethod.ToString();
+			#endregion
+
+		}
+
+        private static void addParameter(Database database, DbCommand command,
+            string name, DbType dbType, object value)
+        {
+            database.AddInParameter(command, name, dbType, value);
+        }
+
+        private static void addParameter(Database database, DbCommand command,
+            string name, DbType dbType, object value, object nullValue)
+        {
+            if (value == null)
+                database.AddInParameter(command, name, dbType, nullValue);
+            else
+                database.AddInParameter(command, name, dbType, value);
+        }
+
+		#endregion
+
+		#region Default NitroCast Fill Apply
+
+		internal static bool _fill(GreyFoxContact greyFoxContact)
+		{
+			// Clone item from cache.
+			if(cacheEnabled)
+			{
+                object cachedObject = cache.GetData(greyFoxContact);
+                if (cachedObject != null)
+				{
+                    ((GreyFoxContact) cachedObject).CopyTo(greyFoxContact, true);
+				    return greyFoxContact.isSynced;
+				}
+			}
+
+            StringBuilder query;
+            Database database;
+            DbCommand dbCommand;
+			
+            query = new StringBuilder("SELECT ");
+			query.Append(string.Join(",", InnerJoinFields));
+			query.Append(" FROM ");
+			query.Append(greyFoxContact.tableName);
+			query.Append(" WHERE GreyFoxContactID=");
+			query.Append(greyFoxContact.iD);
+			query.Append(";");
+
+            database = DatabaseFactory.CreateDatabase();
+            dbCommand = database.GetSqlStringCommand(query);
+            DbDataReader r = database.ExecuteReader(dbCommand);
+
+			if(!r.Read())
+				throw(new Exception(string.Format("Cannot find GreyFoxContactID '{0}'.", 
+					greyFoxContact.iD)));
+
+			FillFromReader(greyFoxContact, greyFoxContact.tableName, r, 0, 1);
+            			
+            if(cacheEnabled) cacheStore(greyFoxContact);
+			return true;
+		}
+
+		#endregion
+
+		#region Default NitroCast GetCollection Apply
+
+		public GreyFoxContactCollection GetCollection(string whereClause, string sortClause)
+		{
+			return GetCollection(0, whereClause, sortClause);
+		}
+
+		public GreyFoxContactCollection GetCollection(int topCount, string whereClause, string sortClause)
+		{
+			StringBuilder query;
+            Database database;
+            DbCommand dbCommand;
+            DbDataReader r;
+            GreyFoxContactCollection greyFoxContactCollection;
+
+			query = new StringBuilder("SELECT ");
+
+			if(topCount > 0)
+			{
+				query.Append("TOP ");
+				query.Append(topCount);
+				query.Append(" ");
+			}
+
+			foreach(string columnName in InnerJoinFields)
+			{
+				query.Append("GreyFoxContact.");
+				query.Append(columnName);
+				query.Append(",");
+			}
+
+			//
+			// Remove trailing comma
+			//
+			query.Length--;
+			query.Append(" FROM ");
+			query.Append(tableName);
+			query.Append(" AS GreyFoxContact");
+			//
+			// Render where clause
+			//
+			if(whereClause != string.Empty)
+			{
+				query.Append(" WHERE ");
+				query.Append(whereClause);
+			}
+
+			//
+			// Render sort clause 
+			//
+			if(sortClause != string.Empty)
+			{
+				query.Append(" ORDER BY ");
+				query.Append(sortClause);
+			}
+
+			//
+			// Render final semicolon
+			//
+			query.Append(";");
+
+            database = DatabaseFactory.CreateDatabase();
+            dbCommand = database.GetSqlStringCommand(query.ToString());
+
+			#if DEBUG
+			
+			try
+			{
+                r = database.ExecuteReader(dbCommand);
+			}
+			catch (Exception e)
+			{
+				string msg = e.Message;
+				throw(new Exception(msg + " --- Query: " + query.ToString()));
+            }
+
+			#else
+
+			r = database.ExecuteReader(dbCommand);
+
+			#endif
+
+			greyFoxContactCollection = new GreyFoxContactCollection();
+
+            while (r.Read())
+            {
+                greyFoxContactCollection.Add(ParseFromReader(tableName, r, 0, 1));
+            }
+
+			return greyFoxContactCollection;
+		}
+
+		#endregion
+
+		#region Default NitroCast ParseFromReader Apply
+
+		public static GreyFoxContact ParseFromReader(string tableName, DbDataReader r, int idOffset, int dataOffset)
+		{
+			GreyFoxContact greyFoxContact = new GreyFoxContact(tableName);
+			FillFromReader(greyFoxContact, tableName, r, idOffset, dataOffset);
+			return greyFoxContact;
+		}
+
+		#endregion
+
+		#region Default NitroCast FillFromReader Apply
+
+		/// <summary>
+		/// Fills the {0} from a OleDbDataReader.
+		/// </summary>
+        public static void FillFromReader(GreyFoxContact greyFoxContact, string tableName, DbDataReader r, int idOffset, int dataOffset)
+		{
+			greyFoxContact.tableName = tableName;
+			greyFoxContact.iD = r.GetInt32(idOffset);
+			greyFoxContact.isSynced = true;
+			greyFoxContact.isPlaceHolder = false;
+
+			if(!r.IsDBNull(0+dataOffset)) 
+				greyFoxContact.displayName = r.GetString(0+dataOffset);
+			else
+				greyFoxContact.displayName = string.Empty;
+			if(!r.IsDBNull(1+dataOffset)) 
+				greyFoxContact.prefix = r.GetString(1+dataOffset);
+			else
+				greyFoxContact.prefix = string.Empty;
+			if(!r.IsDBNull(2+dataOffset)) 
+				greyFoxContact.firstName = r.GetString(2+dataOffset);
+			else
+				greyFoxContact.firstName = string.Empty;
+			if(!r.IsDBNull(3+dataOffset)) 
+				greyFoxContact.middleName = r.GetString(3+dataOffset);
+			else
+				greyFoxContact.middleName = string.Empty;
+			if(!r.IsDBNull(4+dataOffset)) 
+				greyFoxContact.lastName = r.GetString(4+dataOffset);
+			else
+				greyFoxContact.lastName = string.Empty;
+			greyFoxContact.suffixCommaEnabled = r.GetBoolean(5+dataOffset);
+			if(!r.IsDBNull(6+dataOffset)) 
+				greyFoxContact.suffix = r.GetString(6+dataOffset);
+			else
+				greyFoxContact.suffix = string.Empty;
+			if(!r.IsDBNull(7+dataOffset)) 
+				greyFoxContact.title = r.GetString(7+dataOffset);
+			else
+				greyFoxContact.title = string.Empty;
+			if(!r.IsDBNull(8+dataOffset)) 
+				greyFoxContact.validationFlags = r.GetByte(8+dataOffset);
+			if(!r.IsDBNull(9+dataOffset)) 
+				greyFoxContact.validationMemo = r.GetString(9+dataOffset);
+			else
+				greyFoxContact.validationMemo = string.Empty;
+			if(!r.IsDBNull(10+dataOffset)) 
+				greyFoxContact.address1 = r.GetString(10+dataOffset);
+			else
+				greyFoxContact.address1 = string.Empty;
+			if(!r.IsDBNull(11+dataOffset)) 
+				greyFoxContact.address2 = r.GetString(11+dataOffset);
+			else
+				greyFoxContact.address2 = string.Empty;
+			if(!r.IsDBNull(12+dataOffset)) 
+				greyFoxContact.city = r.GetString(12+dataOffset);
+			else
+				greyFoxContact.city = string.Empty;
+			if(!r.IsDBNull(13+dataOffset)) 
+				greyFoxContact.stateProvince = r.GetString(13+dataOffset);
+			else
+				greyFoxContact.stateProvince = string.Empty;
+			if(!r.IsDBNull(14+dataOffset)) 
+				greyFoxContact.country = r.GetString(14+dataOffset);
+			else
+				greyFoxContact.country = string.Empty;
+			if(!r.IsDBNull(15+dataOffset)) 
+				greyFoxContact.postalCode = r.GetString(15+dataOffset);
+			else
+				greyFoxContact.postalCode = string.Empty;
+			if(!r.IsDBNull(16+dataOffset)) 
+				greyFoxContact.homePhone = r.GetString(16+dataOffset);
+			else
+				greyFoxContact.homePhone = string.Empty;
+			if(!r.IsDBNull(17+dataOffset)) 
+				greyFoxContact.workPhone = r.GetString(17+dataOffset);
+			else
+				greyFoxContact.workPhone = string.Empty;
+			if(!r.IsDBNull(18+dataOffset)) 
+				greyFoxContact.fax = r.GetString(18+dataOffset);
+			else
+				greyFoxContact.fax = string.Empty;
+			if(!r.IsDBNull(19+dataOffset)) 
+				greyFoxContact.pager = r.GetString(19+dataOffset);
+			else
+				greyFoxContact.pager = string.Empty;
+			if(!r.IsDBNull(20+dataOffset)) 
+				greyFoxContact.mobilePhone = r.GetString(20+dataOffset);
+			else
+				greyFoxContact.mobilePhone = string.Empty;
+			if(!r.IsDBNull(21+dataOffset)) 
+				greyFoxContact.email1 = r.GetString(21+dataOffset);
+			else
+				greyFoxContact.email1 = string.Empty;
+			if(!r.IsDBNull(22+dataOffset)) 
+				greyFoxContact.email2 = r.GetString(22+dataOffset);
+			else
+				greyFoxContact.email2 = string.Empty;
+			if(!r.IsDBNull(23+dataOffset)) 
+				greyFoxContact.url = r.GetString(23+dataOffset);
+			else
+				greyFoxContact.url = string.Empty;
+			if(!r.IsDBNull(24+dataOffset)) 
+				greyFoxContact.businessName = r.GetString(24+dataOffset);
+			else
+				greyFoxContact.businessName = string.Empty;
+			if(!r.IsDBNull(25+dataOffset)) 
+				greyFoxContact.memoText = r.GetString(25+dataOffset);
+			else
+				greyFoxContact.memoText = string.Empty;
+			if(!r.IsDBNull(26+dataOffset)) 
+				greyFoxContact.birthDate = r.GetDateTime(26+dataOffset);
+			else
+				greyFoxContact.birthDate = DateTime.MinValue;
+			greyFoxContact.contactMethod = (GreyFoxContactMethod)r.GetByte(27+dataOffset);
+		}
+
+		#endregion
+
+		#region Default NitroCast Delete Apply
+
+		internal static void _delete(string tableName, int id)
+		{
+			StringBuilder query;
+            Database database;
+            DbCommand dbCommand;
+
+            query = new StringBuilder("DELETE * FROM ");
+            query.Append(tableName);
+            query.Append(" WHERE GreyFoxContactID=");
+            query.Append(id);
+            query.Append(';');
+
+            database = DatabaseFactory.CreateDatabase();
+            dbCommand = database.GetSqlStringCommand(query);
+            database.ExecuteNonQuery(dbCommand);
+
+			cacheRemove(tableName, id);
+		}
+
+		#endregion
+
+		public string VerifyTable(bool repair)
+		{
+            Database database;
+            DbConnection dbConnection;
+            DbCommand dbCommand;
+            bool match;
+            string[] restrictions1;
+            string msg;
+
+            msg = string.Empty;
+            restrictions1 = new string[] { null, null, tableName, null };
+
+            database = DatabaseFactory.CreateDatabase();
+            dbConnection = database.CreateConnection();
+            dbConnection.Open();            
+			            
+			DataTable schemaTable = dbConnection.GetSchema("Columns", restrictions1);
+
+			for(int i = 0; i <= JoinFields.GetUpperBound(0); i++)
+			{
+				match = false;
+				foreach(DataRow row in schemaTable.Rows)
+				{
+					if(JoinFields[i,0] == row[3].ToString())
+					{
+						match = true;
+						break;
+					}
+				}
+				if(!match)
+				{
+					if(repair)
+					{
+                        dbCommand = database.GetSqlStringCommand(
+                            "ALTER TABLE " + tableName +
+                            " ADD COLUMN " + JoinFields[i, 0] + " " + JoinFields[i, 1] + ";");
+                        database.ExecuteNonQuery(dbCommand);
+
+						msg += "Added column '" + JoinFields[i,0] + "'. ";
+					}
+					else
+					{
+						msg += "Missing column '" + JoinFields[i,0] + "'. ";
+					}
+				}
+			}
+
+			return msg;
+		}
+
+		#region Default NitroCast Create Table Methods
+
+		public void CreateTable()
+		{
+			StringBuilder query;
+            Database database;
+            DbCommand dbCommand;
+            
+            query = new StringBuilder("CREATE TABLE ");
+			query.Append(tableName);
+			query.Append(" (GreyFoxContactID COUNTER(1,1) CONSTRAINT GreyFoxContactID PRIMARY KEY, " +
+				"DisplayName TEXT(255)," +
+				"Prefix TEXT(75)," +
+				"FirstName TEXT(75)," +
+				"MiddleName TEXT(75)," +
+				"LastName TEXT(75)," +
+				"SuffixCommaEnabled BIT," +
+				"Suffix TEXT(75)," +
+				"Title TEXT(255)," +
+				"ValidationFlags BYTE," +
+				"ValidationMemo TEXT(255)," +
+				"Address1 TEXT(75)," +
+				"Address2 TEXT(75)," +
+				"City TEXT(75)," +
+				"StateProvince TEXT(75)," +
+				"Country TEXT(75)," +
+				"PostalCode TEXT(75)," +
+				"HomePhone TEXT(75)," +
+				"WorkPhone TEXT(75)," +
+				"Fax TEXT(75)," +
+				"Pager TEXT(75)," +
+				"MobilePhone TEXT(75)," +
+				"Email1 TEXT(75)," +
+				"Email2 TEXT(75)," +
+				"Url TEXT(75)," +
+				"BusinessName TEXT(255)," +
+				"MemoText MEMO," +
+				"BirthDate DATETIME," +
+				"ContactMethod BYTE);");
+
+            Database database = DatabaseFactory.CreateDatabase();
+            dbCommand = database.GetSqlStringCommand(query.ToString());
+            database.ExecuteNonQuery(dbCommand);
+		}
+
+		#endregion
+
+		#region Cache Methods
+
+		private static void cacheStore(GreyFoxContact greyFoxContact)
+		{
+            Cache cache = CacheFactory.GetCacheManager("GreyFoxContact_" + greyFoxContact.tableName);
+            cache.Add(greyFoxContact.iD.ToString(), greyFoxContact);
+		}
+
+		private static GreyFoxContact cacheFind(string tableName, int id)
+		{
+            Cache cache = CacheFactory.GetCacheManager("GreyFoxContact_" + tableName);
+            return cache.GetData(id.ToString());
+		}
+
+		private static void cacheRemove(string tableName, int id)
+		{
+            Cache cache = CacheFactory.GetCacheManager("GreyFoxContact_" + tableName);
+            cache.Remove(id.ToString());
+		}
+
+		#endregion
+
+		//--- Begin Custom Code ---
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													
+		public bool FullNameExists(string fullName)
+		{
+			GreyFoxContact c = new GreyFoxContact();
+            c.ParseName(fullName);
+
+			OleDbConnection dbConnection = new OleDbConnection(connectionString);
+			OleDbCommand dbCommand = new OleDbCommand();
+			dbCommand.Connection = dbConnection;
+			dbCommand.CommandText = "SELECT COUNT(*) " +
+				"FROM " + tableName + 
+				"WHERE FirstName=@FirstName " +
+				"	AND MiddleName=@MiddleName " +
+				"	AND LastName=@LastName " +
+				"	AND Suffix=@Suffix;";
+
+			dbCommand.Parameters.Add("@FirstName", OleDbType.VarChar);
+			dbCommand.Parameters["@FirstName"].Value = c.FirstName;
+			dbCommand.Parameters.Add("@MiddleName", OleDbType.VarChar);
+			dbCommand.Parameters["@MiddleName"].Value = c.MiddleName;
+			dbCommand.Parameters.Add("@LastName", OleDbType.VarChar);
+			dbCommand.Parameters["@LastName"].Value = c.LastName;
+			dbCommand.Parameters.Add("@Suffix", OleDbType.VarChar);
+			dbCommand.Parameters["@Suffix"].Value = c.Suffix;
+
+			dbConnection.Open();
+            bool exists = ((int) dbCommand.ExecuteScalar()) > 0;
+			dbConnection.Close();
+			c = null;
+			return exists;
+		}
+
+		public bool BusinessNameExists(string businessName)
+		{
+			OleDbConnection dbConnection = new OleDbConnection(connectionString);
+			OleDbCommand dbCommand = new OleDbCommand();
+			dbCommand.Connection = dbConnection;
+			dbCommand.CommandText = "SELECT COUNT(*) " +
+				"FROM " + tableName + 
+				"WHERE BusinessName=@BusinessName;";
+
+			dbCommand.Parameters.Add("@BusinessName", OleDbType.VarChar);
+			dbCommand.Parameters["@BusinessName"].Value = businessName;
+
+			dbConnection.Open();
+			bool exists = ((int) dbCommand.ExecuteScalar()) > 0;
+			dbConnection.Close();
+			return exists;
+		}
+
+		/// <summary>
+		/// An object to cache the parameterized query for full name queries.
+		/// </summary>
+		public GreyFoxContact FindByFullName(string fullName, bool placeHolderOnly)
+		{
+			// create a new contact to parse a name into.
+			GreyFoxContact c = new GreyFoxContact(tableName);
+			c.ParseName(fullName);
+
+			StringBuilder query = new StringBuilder();
+			query.Append("SELECT ");
+			if(placeHolderOnly)
+				query.Append(InnerJoinFields[0]);
+			else
+				query.Append(string.Join(",", InnerJoinFields));
+			query.Append(" FROM ");
+			query.Append(tableName);
+			query.Append(" WHERE FirstName=@FirstName AND " +
+				"MiddleName=@MiddleName AND " +
+				"LastName=@LastName AND " +
+				"Suffix=@Suffix;");
+			
+			OleDbConnection dbConnection = new OleDbConnection(connectionString);
+			OleDbCommand dbCommand = new OleDbCommand(query.ToString(), dbConnection);
+
+			dbCommand.Parameters.Add("@FirstName", OleDbType.VarChar);
+			dbCommand.Parameters["@FirstName"].Value = c.FirstName;
+			dbCommand.Parameters.Add("@MiddleName", OleDbType.VarChar);
+			dbCommand.Parameters["@MiddleName"].Value = c.MiddleName;
+			dbCommand.Parameters.Add("@LastName", OleDbType.VarChar);
+			dbCommand.Parameters["@LastName"].Value = c.LastName;
+			dbCommand.Parameters.Add("@Suffix", OleDbType.VarChar);
+			dbCommand.Parameters["@Suffix"].Value = c.Suffix;
+
+			dbConnection.Open();
+			OleDbDataReader r = dbCommand.ExecuteReader();
+			if(r.Read())
+			{
+				if(placeHolderOnly)
+					c = GreyFoxContact.NewPlaceHolder(tableName, r.GetInt32(0));
+				else
+					c = GreyFoxContactManager.ParseFromReader(tableName, r, 0, 1);
+			}
+			r.Close();
+			dbConnection.Close();
+			return c;
+
+		}
+
+		public GreyFoxContact FindByBusinessName(string businessName, bool placeHolderOnly)
+		{
+			StringBuilder query = new StringBuilder();
+			query.Append("SELECT ");
+			if(placeHolderOnly)
+				query.Append(InnerJoinFields[0]);
+			else
+				query.Append(string.Join(",", InnerJoinFields));
+			query.Append(" FROM ");
+			query.Append(tableName);
+			query.Append(" WHERE BusinessName=@BusinessName;");
+		
+			OleDbConnection dbConnection = new OleDbConnection(connectionString);
+			OleDbCommand dbCommand = new OleDbCommand(query.ToString(), dbConnection);
+			dbCommand.Parameters.Add("@BusinessName", OleDbType.VarChar);
+			dbCommand.Parameters["@BusinessName"].Value = businessName;
+			dbConnection.Open();
+			OleDbDataReader r = dbCommand.ExecuteReader();
+			GreyFoxContact c;
+			if(r.Read())
+			{
+				if(placeHolderOnly)
+					c = GreyFoxContact.NewPlaceHolder(tableName, r.GetInt32(0));
+				else
+					c = GreyFoxContactManager.ParseFromReader(tableName, r, 0, 1);
+			}
+			else
+			{
+				c = new GreyFoxContact(tableName);
+				c.BusinessName = businessName;
+			}
+			r.Close();
+			dbConnection.Close();
+			return c;
+		}
+
+		public static DataTable DropDownData(string tableName)
+		{
+			return DropDownData(tableName, DropDownType.FullName);
+		}
+																																																																																																																																																																																																																																						
+		public static DataTable DropDownData(string tableName, DropDownType dropDownType)
+		{
+			OleDbConnection dbConnection = new OleDbConnection(connectionString);
+			OleDbCommand dbCommand = new OleDbCommand();
+			dbCommand.Connection = dbConnection;
+            OleDbDataAdapter da = new OleDbDataAdapter(dbCommand);
+			switch(dropDownType)
+			{
+				case DropDownType.BusinessName:
+					dbCommand.CommandText = "SELECT GreyFoxContactID, BusinessName FROM " +
+						tableName + " ORDER BY LastName;";
+					break;
+				case DropDownType.FullName:
+					dbCommand.CommandText = "SELECT GreyFoxContactID, LastName, FirstName, MiddleName, Suffix FROM " +
+						tableName + " ORDER BY LastName;";
+					break;
+				default:
+					throw(new Exception("Invalid drop down type."));
+			}
+			DataTable dt = new DataTable();
+			da.Fill(dt);
+			return dt;
+		}
+
+		public enum DropDownType { BusinessName, FullName };
+																										
+		public void CorrectStateProvinceFields()
+		{
+			OleDbConnection dbConnection = new OleDbConnection(connectionString);
+			OleDbCommand dbCommand = new OleDbCommand();
+			dbCommand.Connection = dbConnection;
+			dbConnection.Open();
+			for(int x = 0; x <= GreyFoxContact.States.GetUpperBound(0); x++)
+			{
+				dbCommand.CommandText = string.Format("UPDATE {0} " +
+					"SET StateProvince='{1}' WHERE StateProvince LIKE '{2}';",
+					tableName, GreyFoxContact.States[x,1], GreyFoxContact.States[x,0]);
+				dbCommand.ExecuteNonQuery();
+			}
+			for(int x = 0; x <= GreyFoxContact.CanadianProvinces.GetUpperBound(0); x++)
+			{
+				dbCommand.CommandText = string.Format("UPDATE {0} " +
+					"SET StateProvince='{1}' WHERE StateProvince LIKE '{2}';",
+					tableName, GreyFoxContact.CanadianProvinces[x,1], GreyFoxContact.CanadianProvinces[x,0]);
+				dbCommand.ExecuteNonQuery();
+			}
+			dbConnection.Close();
+		}
+
+		public void Delete(int contactID)
+		{
+			_delete(tableName, contactID);
+		}
+
+		//--- End Custom Code ---
+	}
+}
+
